@@ -35,7 +35,7 @@
             echo "</table>";
         }
         else{
-            header("Location: http://localhost/lista_3/8/8.html");
+            header("Location: http://8/8.html");
              exit();
         }
         ?>
