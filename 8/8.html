@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html >
+<head>
+	<title></title>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<div class="container text-center mt-5 mb-5">
+    <h1 class="display-4">Controle de Notas de Alunos</h1>
+</div>
+<div class="container">
+    <form class="form-horizontal" method="post" action="">
+    <div class="form-group mb-2">
+        <label class="control-label col-sm-2" for="alunos">Quantidade de alunos:</label>
+        <div class="col-sm-3">
+            <input type="number" min="0" class="form-control" id="alunos" placeholder="Quantidade de alunos" name="alunos">
+        </div>
+    </div>
+    <div class="form-group mb-2">
+        <label class="control-label col-sm-2" for="alunos">Quantidade de avaliações:</label>
+        <div class="col-sm-3">
+            <input type="number" min="0" class="form-control" id="avaliacoes" placeholder="Quantidade de avaliações" name="avaliacoes">
+        </div>
+        <input type="button" class="btn bg-dark text-white mt-4" id="botao" value="Gerar Tabela"></input>
+    </div>
+    </form>
+</div>
+<div class="container mt-4" id="div_form">
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+<script>
+    $(document).ready(function(){
+    $("#botao").click(function(){
+        var qtd_alunos = $("#alunos").val();
+        var qtd_aval = $("#avaliacoes").val();
+        var div_form = document.getElementById("div_form");
+        var tabela = "<form class='form-horizontal' method='post' action='8_recebe.php'><table id='tabela' class='table text-center'><tr class='bg-dark text-white'><th>Alunos</th>";
+        for(i=0;i<qtd_aval;i++){
+            contagem = i+1;
+            tabela = tabela+"<th>Avaliação "+contagem+"</th>"
+        }
+        tabela = tabela+"<th>#</th></tr>";
+        for (j = 0; j < qtd_alunos; j++) {
+            tabela += "<tr><td><input type='text' required class='form-control' placeholder='Nome do aluno' name='notas[" + j + "][aluno]'></td>";
+        for (k = 0; k < qtd_aval; k++) {
+            tabela += "<td><input type='number' min='0' max='100' class='form-control' placeholder='Nota do aluno' name='notas[" + j + "][avaliacoes][" + k + "]'></td>";
+        }
+            tabela += "<td><button type='button' class='btn btn-danger deletar'>Deletar</button></td></tr>";
+        }
+        tabela = tabela+"</table>\
+        <input type='submit' class='btn bg-dark text-white''></input></form>";
+        div_form.innerHTML = tabela;
+    });
+    //
+    $("#div_form").on("click", ".deletar", function(){
+        $(this).closest("tr").remove();
+    });
+    // O código a seguir não funcionou porque a classe foi criada dinâmicamente.
+    // $(".deletar").click(function(){
+    //     // var delID = $(this).attr('id');
+    //     alert("Olá");
+    //     //document.getElementById("tabela").deleteRow(0);
+    // });
+    });
+</script>
